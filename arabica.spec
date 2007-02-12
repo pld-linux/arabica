@@ -5,7 +5,7 @@
 # - more parsers
 #
 Summary:	Arabica - an XML parser toolkit written in C++
-Summary(pl.UTF-8):   Arabica - narzędzia do parsowania XML napisane w C++
+Summary(pl.UTF-8):	Arabica - narzędzia do parsowania XML napisane w C++
 Name:		arabica
 Version:	2004_february
 %define	_ver	%(echo %{version} | tr _ -)
@@ -44,7 +44,7 @@ komponentu COM parsera XML Microsoftu.
 
 %package devel
 Summary:	Header files for Arabica
-Summary(pl.UTF-8):   Pliki nagłówkowe Arabica
+Summary(pl.UTF-8):	Pliki nagłówkowe Arabica
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	libstdc++-devel
