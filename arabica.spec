@@ -5,7 +5,7 @@
 # - more parsers
 #
 Summary:	Arabica - an XML parser toolkit written in C++
-Summary(pl):	Arabica - narzêdzia do parsowania XML napisane w C++
+Summary(pl.UTF-8):   Arabica - narzÄ™dzia do parsowania XML napisane w C++
 Name:		arabica
 Version:	2004_february
 %define	_ver	%(echo %{version} | tr _ -)
@@ -31,20 +31,20 @@ accommodate custom string types. It provides uniform SAX2 wrappers
 for the expat parser, Xerces, libxml and, on Windows only, for the
 Microsoft XML parser COM component.
 
-%description -l pl
-Arabica to pakiet narzêdzi do parsowania XML zawieraj±cy implementacje
+%description -l pl.UTF-8
+Arabica to pakiet narzÄ™dzi do parsowania XML zawierajÄ…cy implementacje
 SAX2 i DOM napisane w standardowym C++.
 
-Arabica to pe³na implementacja SAX2 wraz z opcjonalnymi interfejsami i
+Arabica to peÅ‚na implementacja SAX2 wraz z opcjonalnymi interfejsami i
 klasami pomocniczymi. Dostarcza kodowane UTF-8 std::strings albo
 kodowane UCS-2 std::wstrings, ale ma szablony oparte na typie string,
-wiêc mo¿e obs³ugiwaæ w³asne typy string. Udostêpnia jednolite wrappery
-SAX2 dla parserów expat, Xerces, libxml oraz - tylko pod Windows -
+wiÄ™c moÅ¼e obsÅ‚ugiwaÄ‡ wÅ‚asne typy string. UdostÄ™pnia jednolite wrappery
+SAX2 dla parserÃ³w expat, Xerces, libxml oraz - tylko pod Windows -
 komponentu COM parsera XML Microsoftu.
 
 %package devel
 Summary:	Header files for Arabica
-Summary(pl):	Pliki nag³ówkowe Arabica
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe Arabica
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	libstdc++-devel
@@ -53,8 +53,8 @@ Requires:	libxml2-devel
 %description devel
 Header files for Arabica.
 
-%description devel -l pl
-Pliki nag³ówkowe Arabica.
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe Arabica.
 
 %prep
 %setup -q -n %{name}-%{_ver}
