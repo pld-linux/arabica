@@ -1,20 +1,18 @@
 #
 # TODO:
 # - unify Arabica <-> arabica
-# - is -fPIC correct?
 # - more parsers
 #
 Summary:	Arabica - an XML parser toolkit written in C++
 Summary(pl.UTF-8):	Arabica - narzędzia do parsowania XML napisane w C++
 Name:		arabica
-Version:	2004_february
+Version:	2016_January
 %define	_ver	%(echo %{version} | tr _ -)
-Release:	0.1
+Release:	1
 License:	BSD-like
 Group:		Development/Libraries
-Source0:	http://dl.sourceforge.net/arabica/%{name}-%{_ver}.tar.gz
-# Source0-md5:	64a0ccdfd9a9e10a5391237969033c3c
-Patch0:		%{name}-makefile.patch
+Source0:	https://github.com/jezhiggins/arabica/archive/%{_ver}.tar.gz
+# Source0-md5:	2ab97777049ac703e7ff03710ea9c1a2
 URL:		http://www.jezuk.co.uk/cgi-bin/view/arabica
 BuildRequires:	libstdc++-devel
 BuildRequires:	libxml2-devel
@@ -56,37 +54,56 @@ Header files for Arabica.
 %description devel -l pl.UTF-8
 Pliki nagłówkowe Arabica.
 
+%package static
+Summary:	Static Arabica library
+Summary(pl.UTF-8):	Statyczna biblioteka Arabica
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description static
+Static Arabica library.
+
+%description static -l pl.UTF-8
+Statyczna biblioteka Arabica.
+
 %prep
 %setup -q -n %{name}-%{_ver}
-%patch0 -p1
 
 %build
-%{__make} \
-	CXX="%{__cxx}" \
-	CPP="%{__cpp}" \
-	LD="%{__cxx}" \
-	CXXFLAGS="%{rpmcxxflags} -fPIC" \
-	INCS_DIRS="-I%{_builddir}/%{buildsubdir} `xml2-config --cflags`" \
-	DYNAMIC_LIBS="-lstdc++ `xml2-config --libs`" \
-	LINK_SHARED="-shared -fPIC"
-#	USE_PARSER="-DUSE_EXPAT -DUSE_LIBXML2 -DUSE_XERCES"
+%{__libtoolize}
+%{__aclocal}
+%{__autoconf}
+%{__autoheader}
+%{__automake}
+%configure
+
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_libdir},%{_includedir}/arabica}
 
-install bin/libArabica.so $RPM_BUILD_ROOT%{_libdir}
-find DOM SAX XML Utils -name \*.h -exec \
-	install -D '{}' $RPM_BUILD_ROOT%{_includedir}/arabica/'{}' \;
+%{__make} install \
+     DESTDIR=$RPM_BUILD_ROOT
+
+%{__mv} $RPM_BUILD_ROOT%{_bindir}/mangle $RPM_BUILD_ROOT%{_bindir}/arabica-mangle
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ChangeLog todo.txt
-%attr(755,root,root) %{_libdir}/*.so
+%doc README NEWS AUTHORS ChangeLog
+%attr(755,root,root) %{_bindir}/arabica-mangle
+%attr(755,root,root) %{_libdir}/libarabica.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libarabica.so.0
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libarabica.so
+%{_libdir}/libarabica.la
 %{_includedir}/arabica
+%{_pkgconfigdir}/arabica.pc
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/libarabica.a
